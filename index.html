@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Gen Z Wardrobe Planner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="antialiased">
+
+    <header id="navbar" class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#home" class="text-xl font-bold text-gray-800">Style Planner</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#wardrobe" class="nav-link pb-1">The Wardrobe</a>
+                <a href="#lookbook" class="nav-link pb-1">The Lookbook</a>
+                <a href="#principles" class="nav-link pb-1">Style Principles</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-800 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pt-2 pb-4 space-y-2">
+            <a href="#wardrobe" class="block nav-link text-center">The Wardrobe</a>
+            <a href="#lookbook" class="block nav-link text-center">The Lookbook</a>
+            <a href="#principles" class="block nav-link text-center">Style Principles</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="py-20 md:py-32 bg-stone-100">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-800 mb-4">The Modern Gen Z Wardrobe</h1>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">An interactive guide to building a versatile, stylish, and content-ready wardrobe. This plan is built on the core principle of <span class="font-semibold text-[#A37E63]">proportion play</span>: slim-fit tops to accentuate your build, paired with relaxed bottoms for a modern silhouette.</p>
+            </div>
+        </section>
+
+        <section id="wardrobe" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">The Core Wardrobe Capsule</h2>
+                    <p class="mt-2 text-gray-600 max-w-2xl mx-auto">This is your foundation. A curated collection of quality basics designed to be mixed and matched. Use the filters to explore each category.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12 mb-16 items-center">
+                    <div>
+                        <h3 class="text-xl font-bold text-center mb-4">Color Palette Breakdown</h3>
+                        <p class="text-center text-gray-600 mb-4">Your wardrobe is built on a foundation of versatile neutrals, brought to life with subtle accent colors. This 80/20 split ensures maximum interchangeability.</p>
+                        <div class="chart-container">
+                            <canvas id="colorPaletteChart"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-center mb-4">Capsule Inventory</h3>
+                        <p class="text-center text-gray-600 mb-4">A visual look at the number of items per category. This balance is key to having options for every occasion without an overflowing closet.</p>
+                        <div class="chart-container">
+                            <canvas id="itemCountChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="wardrobe-filters" class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8">
+                    <button class="filter-btn active px-4 py-2 bg-white rounded-full shadow-sm text-gray-700" data-filter="all">All Items</button>
+                    <button class="filter-btn px-4 py-2 bg-white rounded-full shadow-sm text-gray-700" data-filter="Tops">Tops</button>
+                    <button class="filter-btn px-4 py-2 bg-white rounded-full shadow-sm text-gray-700" data-filter="Bottoms">Bottoms</button>
+                    <button class="filter-btn px-4 py-2 bg-white rounded-full shadow-sm text-gray-700" data-filter="Outerwear">Outerwear</button>
+                    <button class="filter-btn px-4 py-2 bg-white rounded-full shadow-sm text-gray-700" data-filter="Footwear">Footwear</button>
+                    <button class="filter-btn px-4 py-2 bg-white rounded-full shadow-sm text-gray-700" data-filter="Accessories">Accessories</button>
+                </div>
+
+                <div id="wardrobe-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                </div>
+            </div>
+        </section>
+
+        <section id="lookbook" class="py-16 md:py-24 bg-stone-100">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">The Outfit Lookbook</h2>
+                    <p class="mt-2 text-gray-600 max-w-2xl mx-auto">Over 25 styled combinations for any situation. Select an occasion to see curated looks that perfectly blend comfort and style.</p>
+                </div>
+
+                <div id="lookbook-filters" class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8">
+                     <button class="filter-btn active px-4 py-2 bg-white rounded-full shadow-sm text-gray-700" data-filter="all">All Looks</button>
+                     <button class="filter-btn px-4 py-2 bg-white rounded-full shadow-sm text-gray-700" data-filter="College">College</button>
+                     <button class="filter-btn px-4 py-2 bg-white rounded-full shadow-sm text-gray-700" data-filter="Dates">Dates & Cafés</button>
+                     <button class="filter-btn px-4 py-2 bg-white rounded-full shadow-sm text-gray-700" data-filter="Travel">Travel & Shoots</button>
+                     <button class="filter-btn px-4 py-2 bg-white rounded-full shadow-sm text-gray-700" data-filter="Errands">Errands</button>
+                     <button class="filter-btn px-4 py-2 bg-white rounded-full shadow-sm text-gray-700" data-filter="Gym">Gym/Athleisure</button>
+                </div>
+
+                <div id="lookbook-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                </div>
+            </div>
+        </section>
+
+        <section id="principles" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Style Principles</h2>
+                    <p class="mt-2 text-gray-600 max-w-2xl mx-auto">Master these core concepts to perfect the vibe. It's not just about the clothes, but how you wear them.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="text-3xl mb-3 text-[#A37E63]">📏</div>
+                        <h3 class="font-bold text-lg mb-2">The Silhouette is King</h3>
+                        <p class="text-gray-600">Always remember the formula: **Fitted on top, loose on the bottom.** This balance is the key to your entire style identity, highlighting your physique in a sophisticated way.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="text-3xl mb-3 text-[#A37E63]">🤏</div>
+                        <h3 class="font-bold text-lg mb-2">Tuck & Roll</h3>
+                        <p class="text-gray-600">For a cleaner look, use a French tuck with tees and polos. Roll the sleeves of shirts and jackets once or twice to further accentuate your arms and add a touch of nonchalance.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="text-3xl mb-3 text-[#A37E63]">✨</div>
+                        <h3 class="font-bold text-lg mb-2">Grooming Matters</h3>
+                        <p class="text-gray-600">This aesthetic is supported by clean grooming. A good haircut, neat skincare, and a subtle fragrance are just as important as the clothes you wear.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="text-3xl mb-3 text-[#A37E63]">🚶</div>
+                        <h3 class="font-bold text-lg mb-2">Wear it with Confidence</h3>
+                        <p class="text-gray-600">The final, and most crucial, accessory. This wardrobe is designed to make you feel good. Wear it with the quiet confidence of someone who knows their style.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Style Planner. An interactive application for modern wardrobe building.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

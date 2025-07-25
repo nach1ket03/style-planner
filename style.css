@@ -1,0 +1,44 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #FDFBF8;
+    color: #333;
+}
+.nav-link {
+    transition: color 0.3s, border-bottom-color 0.3s;
+    border-bottom: 2px solid transparent;
+}
+.nav-link.active, .nav-link:hover {
+    color: #A37E63;
+    border-bottom-color: #A37E63;
+}
+.filter-btn {
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+}
+.filter-btn.active {
+    background-color: #A37E63;
+    color: #FFFFFF;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+.card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    will-change: transform;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+}
+.chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 300px;
+    max-height: 350px;
+}
+@media (min-width: 768px) {
+    .chart-container {
+        height: 350px;
+    }
+}
