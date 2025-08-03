@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Gen Z Wardrobe Planner</title>
+    <title>AI-Powered Gen Z Wardrobe Planner</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,10 +15,11 @@
 
     <header id="navbar" class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
         <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <a href="#home" class="text-xl font-bold text-gray-800">Style Planner</a>
+            <a href="#home" class="text-xl font-bold text-gray-800">AI Style Planner</a>
             <div class="hidden md:flex items-center space-x-8">
                 <a href="#wardrobe" class="nav-link pb-1">The Wardrobe</a>
                 <a href="#lookbook" class="nav-link pb-1">The Lookbook</a>
+                <a href="#ai-stylist" class="nav-link pb-1 font-bold text-[#A37E63]">AI Stylist</a>
                 <a href="#principles" class="nav-link pb-1">Style Principles</a>
             </div>
             <div class="md:hidden">
@@ -30,6 +31,7 @@
         <div id="mobile-menu" class="hidden md:hidden px-6 pt-2 pb-4 space-y-2">
             <a href="#wardrobe" class="block nav-link text-center">The Wardrobe</a>
             <a href="#lookbook" class="block nav-link text-center">The Lookbook</a>
+            <a href="#ai-stylist" class="block nav-link text-center font-bold text-[#A37E63]">AI Stylist</a>
             <a href="#principles" class="block nav-link text-center">Style Principles</a>
         </div>
     </header>
@@ -38,7 +40,7 @@
         <section id="home" class="py-20 md:py-32 bg-stone-100">
             <div class="container mx-auto px-6 text-center">
                 <h1 class="text-4xl md:text-6xl font-bold text-gray-800 mb-4">The Modern Gen Z Wardrobe</h1>
-                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">An interactive guide to building a versatile, stylish, and content-ready wardrobe. This plan is built on the core principle of <span class="font-semibold text-[#A37E63]">proportion play</span>: slim-fit tops to accentuate your build, paired with relaxed bottoms for a modern silhouette.</p>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">An AI-powered, interactive guide to building a versatile, stylish, and content-ready wardrobe. This plan is built on the core principle of <span class="font-semibold text-[#A37E63]">proportion play</span>: slim-fit tops to accentuate your build, paired with relaxed bottoms for a modern silhouette.</p>
             </div>
         </section>
 
@@ -101,7 +103,25 @@
             </div>
         </section>
 
-        <section id="principles" class="py-16 md:py-24">
+        <section id="ai-stylist" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Your Personal AI Stylist</h2>
+                    <p class="mt-2 text-gray-600 max-w-2xl mx-auto">Can't decide what to wear? Describe the occasion or vibe, and let our AI create the perfect outfit for you from your capsule wardrobe.</p>
+                </div>
+                <div class="max-w-xl mx-auto">
+                    <div class="flex gap-4 mb-4">
+                        <input id="ai-prompt-input" type="text" class="flex-grow p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#A37E63] focus:outline-none" placeholder="e.g., 'A relaxed look for a coffee run'">
+                        <button id="generate-outfit-btn" class="filter-btn active px-6 py-3 bg-white rounded-lg shadow-sm text-gray-700 font-semibold">Generate</button>
+                    </div>
+                    <div id="ai-outfit-suggestion" class="bg-white p-6 rounded-lg shadow-md min-h-[100px] text-gray-600">
+                        Your AI-generated outfit will appear here...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="principles" class="py-16 md:py-24 bg-stone-100">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Style Principles</h2>
