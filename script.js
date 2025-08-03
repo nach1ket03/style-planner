@@ -57,6 +57,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const wardrobeFilters = document.getElementById('wardrobe-filters');
     const lookbookGrid = document.getElementById('lookbook-grid');
     const lookbookFilters = document.getElementById('lookbook-filters');
+    const generateOutfitBtn = document.getElementById('generate-outfit-btn');
+    const aiPromptInput = document.getElementById('ai-prompt-input');
+    const aiOutfitSuggestion = document.getElementById('ai-outfit-suggestion');
 
     function renderWardrobe(filter = 'all') {
         wardrobeGrid.innerHTML = '';
@@ -86,6 +89,71 @@ document.addEventListener('DOMContentLoaded', function () {
             lookbookGrid.appendChild(card);
         });
     }
+    
+    // --- AI Stylist Logic ---
+    function getAiOutfitSuggestion() {
+        const userInput = aiPromptInput.value.trim();
+        if (!userInput) {
+            aiOutfitSuggestion.innerHTML = 'Please describe an occasion or vibe first!';
+            return;
+        }
+
+        aiOutfitSuggestion.innerHTML = '<p>Generating your outfit...<p>';
+        
+        // This is where you would call a real AI API.
+        // We'll simulate a delay and a response for this demo.
+        setTimeout(() => {
+            const aiPrompt = `
+                You are a Gen Z fashion stylist. Your task is to create a stylish outfit based on the user's request: "${userInput}".
+                You must use ONLY items from the following wardrobe list:
+                ${JSON.stringify(wardrobeData, null, 2)}
+                
+                RULES:
+                1. Stick to the principle: fitted top, relaxed bottom.
+                2. Choose items that are color-coordinated.
+                3. Construct a complete outfit including a top, a bottom, footwear, and at least one accessory.
+                4. Provide a name for the outfit and a brief explanation for your choices.
+                
+                Example Response Format:
+                {
+                  "outfitName": "Urban Explorer",
+                  "items": "Black Crewneck T-Shirt + Olive Cargo Pants + Chunky Trainers + Silver Chain",
+                  "reason": "This look is perfect for a day out in the city. It's comfortable, functional, and hits the modern streetwear trend."
+                }
+            `;
+            
+            console.log("--- AI Prompt ---");
+            console.log(aiPrompt);
+
+            // Simulated AI Responses (in a real app, this would come from an API call)
+            const simulatedResponses = [
+                {
+                  "outfitName": "Campus Cool",
+                  "items": "White Crewneck T-Shirt + Light-wash Relaxed-Fit Denim + White Leather Sneakers + Tote Bag",
+                  "reason": "A timeless and comfortable look for attending classes or hanging out on campus. The classic white tee and denim combination is elevated by clean leather sneakers and a practical tote."
+                },
+                {
+                  "outfitName": "Café Minimalist",
+                  "items": "Black Knitted Polo Shirt + Charcoal Wide-Leg Trousers + Black Loafers + Minimalist Watch",
+                  "reason": "This sophisticated outfit is perfect for a stylish café visit or a casual date. The knit polo adds texture, while the wide-leg trousers and loafers create a sharp, modern silhouette."
+                },
+                 {
+                  "outfitName": "Creative Mood",
+                  "items": "Charcoal Sweater + Black Cargo Pants + Chunky Trainers + Baseball Cap",
+                  "reason": "This is a strong, contemporary look ideal for a creative setting like a photoshoot or gallery visit. The monochrome palette feels intentional and stylish."
+                }
+            ];
+
+            const randomResponse = simulatedResponses[Math.floor(Math.random() * simulatedResponses.length)];
+
+            aiOutfitSuggestion.innerHTML = `
+                <h4 class="font-bold text-lg text-gray-800 mb-2">${randomResponse.outfitName}</h4>
+                <p class="text-gray-700 mb-3"><span class="font-semibold">Wear this:</span> ${randomResponse.items}</p>
+                <p class="text-sm text-gray-500 italic">"${randomResponse.reason}"</p>
+            `;
+
+        }, 1200);
+    }
 
     wardrobeFilters.addEventListener('click', (e) => {
         if (e.target.tagName === 'BUTTON') {
@@ -102,6 +170,14 @@ document.addEventListener('DOMContentLoaded', function () {
             renderLookbook(e.target.dataset.filter);
         }
     });
+
+    generateOutfitBtn.addEventListener('click', getAiOutfitSuggestion);
+    aiPromptInput.addEventListener('keyup', (e) => {
+        if (e.key === 'Enter') {
+            getAiOutfitSuggestion();
+        }
+    });
+
 
     const colorPaletteChartCtx = document.getElementById('colorPaletteChart').getContext('2d');
     new Chart(colorPaletteChartCtx, {
@@ -136,7 +212,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const itemCountChartCtx = document.getElementById('itemCountChart').getContext('2d');
     const itemCounts = wardrobeData.reduce((acc, item) => {
-        acc[item.category] = (acc[item.category] || 0) + 1;
+        const count = parseInt(item.name.match(/x(\d+)/)?.[1] || 1);
+        acc[item.category] = (acc[item.category] || 0) + count;
         return acc;
     }, {});
     new Chart(itemCountChartCtx, {
